@@ -1,0 +1,28 @@
+body {
+    background-color: #92a8d1;
+}
+
+.square {
+     height: 100px;
+     width: 100px;
+     border-radius: 25px;
+     background-color: #483D8B;
+     margin: 30px 30px 30px 30px;
+     float : right;
+ }
+
+.square-highlated {
+    height: 100px;
+    width: 100px;
+    border-radius: 25px;
+    background-color: #483D8B;
+    margin: 30px 30px 30px 30px;
+    float : right;
+}
+
+.square_container {
+    display: flex;
+    justify-content: center;
+    flex-flow: wrap;
+}
+
