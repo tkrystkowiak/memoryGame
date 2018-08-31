@@ -1,52 +1,71 @@
 body {
     display: flex;
-    background-color: #92a8d1;
+    background-color: #FFE066;
 }
 
 .button {
     font-size: 16px;
-    color: #cdc23f;
-    border: 2px solid #cdc23f;
+    color: #247BA0;
+    border: 2px solid #247BA0;
     border-radius: 8px;
-    background-color: #483D8B;
+    background-color: #FFE066;
 }
 
 .button:hover {
-    background-color:#cdc23f ;
-    color: #483D8B;
+    background-color:#247BA0 ;
+    color: #FFE066;
+}
+
+.time_button {
+    font-size: 16px;
+    padding: 5px;
+    color: #247BA0;
+    border: 2px solid #247BA0;
+    border-radius: 8px;
+    background-color: #FFE066;
+}
+
+.time_button:hover {
+    background-color:#247BA0 ;
+    color: #FFE066;
 }
 
 .square {
      height: 100px;
      width: 100px;
      border-radius: 25px;
-     background-color: #483D8B;
+     background-color: #50514F;
      margin: 30px 30px 30px 30px;
      float : right;
  }
+
+.info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 16px;
+    border-radius: 8px;
+    color: #247BA0;
+    border: 2px solid #247BA0;
+    border-radius: 8px;
+    background-color: #FFE066;
+    font-family: "Arial", Arial, sans-serif;
+}
 
 .menu {
     display: flex;
     flex-shrink: 0;
     justify-content: space-around;
     flex-direction: column;
-    height: 100px;
+    height: 200px;
     width: 150px;
     margin: 30px 30px 30px 30px;
 }
 
-.square-highlated {
-    height: 100px;
-    width: 100px;
-    border-radius: 25px;
-    background-color: #483D8B;
-    margin: 30px 30px 30px 30px;
-    float : right;
-}
-
 .square_container {
     display: flex;
-    justify-content: center;
+    justify-content: left;
     flex-flow: wrap;
 }
 

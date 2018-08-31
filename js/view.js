@@ -1,9 +1,9 @@
 var view = function () {
-        var getInitialNumberOfPieces = function () {
-                return 4;
-                },
-        renderPieces = function(numberOfPieces){
-            for(var i = 0; i <numberOfPieces;i++) {
+    var getInitialNumberOfPieces = function () {
+            return 4;
+        },
+        renderPieces = function (numberOfPieces) {
+            for (var i = 0; i < numberOfPieces; i++) {
                 var piece = document.getElementById(i);
                 if (piece == null) {
                     var piece = document.createElement("div");
@@ -13,36 +13,72 @@ var view = function () {
                 }
             }
         },
-        highlite =  function (pieces) {
-            for(var i = 0; i <pieces.length;i++) {
-                if(pieces[i].highlighted) {
+        removePieces = function (numberOfPieces){
+            for (var i = 0; i < numberOfPieces; i++) {
+                var piece = document.getElementById(i);
+                piece.remove();
+            }
+        },
+        highlight = function (pieces) {
+            for (var i = 0; i < pieces.length; i++) {
+                if (pieces[i].highlighted) {
                     piece = document.getElementById(i);
-                    piece.style.backgroundColor = "#cdc23f";
+                    piece.style.backgroundColor = "#247BA0";
                 }
             }
         },
+        disableAllListeners = function () {
+            document.addEventListener("click", handler, true);
+
+        },
+        enableAllListeners = function () {
+            document.removeEventListener('click', handler, true)
+        },
+        handler = function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+        },
         markCorrect = function (id) {
             piece = document.getElementById(id);
-            piece.style.backgroundColor = "#27cd4f";
+            piece.style.backgroundColor = "#1A936F";
         },
         markIncorrect = function (id) {
             piece = document.getElementById(id);
-            piece.style.backgroundColor = "#cd344c";
+            piece.style.backgroundColor = "#E84855";
         },
-        resetColors = function(pieces){
-            for(var i = 0; i <pieces.length;i++) {
+        resetColors = function (pieces) {
+            for (var i = 0; i < pieces.length; i++) {
                 piece = document.getElementById(i);
                 piece.style = undefined;
             }
+        },
+        setLevel = function(level){
+            piece = document.getElementById("level");
+            piece.innerText = "Level: "+level;
+        },
+        setLeftToGuess = function(leftToGuess){
+            piece = document.getElementById("left");
+            piece.innerText = "Left to Guess: "+ leftToGuess;
+        },
+        setPreviewTime = function(previewTime){
+            piece = document.getElementById("time");
+            piece.innerText = "Preview time: "+ previewTime+"s";
         };
+
 
     return {
         'getInitialNumberOfPieces': getInitialNumberOfPieces,
         'renderPieces': renderPieces,
-        'highlite': highlite,
-        'resetColors' : resetColors,
-        'markCorrect' : markCorrect,
-        'markIncorrect' : markIncorrect
+        'highlight': highlight,
+        'resetColors': resetColors,
+        'markCorrect': markCorrect,
+        'markIncorrect': markIncorrect,
+        'disableAllListeners': disableAllListeners,
+        'enableAllListeners': enableAllListeners,
+        'setLevel': setLevel,
+        'setLeftToGuess': setLeftToGuess,
+        'removePieces': removePieces,
+        'setPreviewTime': setPreviewTime
     };
 
 }();
