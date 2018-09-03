@@ -13,7 +13,7 @@ var view = function () {
                 }
             }
         },
-        removePieces = function (numberOfPieces){
+        removePieces = function (numberOfPieces) {
             for (var i = 0; i < numberOfPieces; i++) {
                 var piece = document.getElementById(i);
                 piece.remove();
@@ -52,19 +52,26 @@ var view = function () {
                 piece.style = undefined;
             }
         },
-        setLevel = function(level){
+        setLevel = function (level) {
             piece = document.getElementById("level");
-            piece.innerText = "Level: "+level;
+            piece.innerText = "Level: " + level;
         },
-        setLeftToGuess = function(leftToGuess){
+        setLeftToGuess = function (leftToGuess) {
             piece = document.getElementById("left");
-            piece.innerText = "Left to Guess: "+ leftToGuess;
+            piece.innerText = "Left to Guess: " + leftToGuess;
         },
-        setPreviewTime = function(previewTime){
+        setPreviewTime = function (previewTime) {
             piece = document.getElementById("time");
-            piece.innerText = "Preview time: "+ previewTime+"s";
+            piece.innerText = "Preview time: " + previewTime + "s";
+        },
+        setAccuracy = function (accuracy) {
+            piece = document.getElementById("accuracy");
+            piece.innerText = "Accuracy: " + accuracy + "%";
+        },
+        setMishitsAllowed = function (mishitsAllowed) {
+            piece = document.getElementById("mishit");
+            piece.innerText = "Mishits allowed: " + mishitsAllowed;
         };
-
 
     return {
         'getInitialNumberOfPieces': getInitialNumberOfPieces,
@@ -78,7 +85,9 @@ var view = function () {
         'setLevel': setLevel,
         'setLeftToGuess': setLeftToGuess,
         'removePieces': removePieces,
-        'setPreviewTime': setPreviewTime
+        'setPreviewTime': setPreviewTime,
+        'setAccuracy': setAccuracy,
+        'setMishitsAllowed': setMishitsAllowed
     };
 
 }();

@@ -9,12 +9,16 @@ var controller = function () {
             game.resetAll();
             view.setLevel(game.getUserLevel());
             view.setLeftToGuess(0);
+            view.setAccuracy(game.getAccuracy());
+            view.setPreviewTime(game.getPreviewTime());
+            view.setMishitsAllowed(game.getMishitsAllowed());
             view.renderPieces(game.getNumberOfPieces());
         },
 
         highlightPieces = function () {
             view.setLevel(game.getUserLevel());
             view.setLeftToGuess(game.getLeftToGuess());
+            game.resetCurrentLevel();
             var pieces = game.drawPieces();
             view.highlight(pieces);
             window.setTimeout(function () {
@@ -41,29 +45,38 @@ var controller = function () {
             view.setPreviewTime(game.getPreviewTime());
         },
         decreasePreviewTime = function () {
-            if (game.getPreviewTime() > 1) {
-                game.decreasePreviewTime();
-                view.setPreviewTime(game.getPreviewTime());
-            }
+            game.decreasePreviewTime();
+            view.setPreviewTime(game.getPreviewTime());
+        },
+        increaseMishitsAllowed = function () {
+            game.increaseMishitsAllowed();
+            view.setMishitsAllowed(game.getMishitsAllowed());
+        },
+        decreaseMishitsAllowed = function () {
+            game.decreaseMishitsAllowed();
+            view.setMishitsAllowed(game.getMishitsAllowed());
         },
         validate = function (event) {
             var id = event.target.id;
             if (game.validateColors(id)) {
                 game.markGuessed(id);
                 view.markCorrect(id);
-                game.incrementGuessed();
                 view.setLeftToGuess(game.getLeftToGuess());
+                view.setAccuracy(game.getAccuracy());
             }
             else {
                 view.markIncorrect(id);
-                view.disableAllListeners();
-                window.setTimeout(function () {
-                    view.resetColors(game.getPieces());
-                    game.resetCurrentLevel();
-                    highlightPieces();
-                    view.enableAllListeners();
-                }, 1000);
-
+                game.markMistake();
+                view.setAccuracy(game.getAccuracy());
+                if (game.isGameOver()) {
+                    view.disableAllListeners();
+                    window.setTimeout(function () {
+                        view.resetColors(game.getPieces());
+                        game.resetCurrentLevel();
+                        highlightPieces();
+                        view.enableAllListeners();
+                    }, 1000);
+                }
             }
             if (game.areAllGuessed()) {
                 view.disableAllListeners();
@@ -83,25 +96,10 @@ var controller = function () {
         'increaseDifficulty': increaseDifficulty,
         'resetGame': resetGame,
         'increasePreviewTime': increasePreviewTime,
-        'decreasePreviewTime': decreasePreviewTime
+        'decreasePreviewTime': decreasePreviewTime,
+        'increaseMishitsAllowed': increaseMishitsAllowed,
+        'decreaseMishitsAllowed': decreaseMishitsAllowed
     }
 }();
-window.onload = function () {
-    controller.startGame(),
-        document.getElementById("start").onclick = function () {
-            controller.highlightPieces()
-        },
-        document.getElementById("more").onclick = function () {
-            controller.increaseDifficulty()
-        },
-        document.getElementById("reset").onclick = function () {
-            controller.resetGame()
-        },
-        document.getElementById("time_plus").onclick = function () {
-            controller.increasePreviewTime()
-        },
-        document.getElementById("time_minus").onclick = function () {
-            controller.decreasePreviewTime()
-        };
 
-};
+

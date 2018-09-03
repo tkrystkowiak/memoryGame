@@ -8,8 +8,10 @@ var game = function () {
         guessedPieces = 0,
         previewTime = 1,
         pieces = [],
-        numberOfGuessed = 0,
-        numberOfMistakes = 0,
+        totalGuessed = 0,
+        totalMistakes = 0,
+        mishitsAllowed = 0,
+        mishits = 0,
         isHigligthed = function (id) {
             return pieces[id].highlighted;
         },
@@ -38,6 +40,7 @@ var game = function () {
         },
         resetCurrentLevel = function () {
             guessedPieces = 0;
+            mishits = 0;
             initializePieces();
         },
         resetAll = function () {
@@ -46,10 +49,12 @@ var game = function () {
             currentNumberOfPieces = initialNumberOfPieces + 2 * difficultyLevel;
             toGuessPieces = currentNumberOfPieces / 2 - 1;
             guessedPieces = 0;
+            previewTime = 1;
+            totalGuessed = 0;
+            totalMistakes = 0;
+            mishits = 0;
+            mishitsAllowed = 0;
             initializePieces();
-        },
-        incrementGuessed = function () {
-            guessedPieces++;
         },
         getNumberOfPieces = function () {
             return currentNumberOfPieces;
@@ -85,6 +90,12 @@ var game = function () {
         },
         markGuessed = function (id) {
             pieces[id].highlighted = false;
+            totalGuessed++;
+            guessedPieces++;
+        },
+        markMistake = function () {
+            totalMistakes++;
+            mishits++;
         },
         getLeftToGuess = function () {
             return toGuessPieces - guessedPieces;
@@ -99,10 +110,38 @@ var game = function () {
             previewTime++;
         },
         decreasePreviewTime = function () {
-            previewTime--;
+            if (game.getPreviewTime() > 1) {
+                previewTime--;
+            }
+        },
+        increaseMishitsAllowed = function () {
+            mishitsAllowed++;
+        },
+        decreaseMishitsAllowed = function () {
+            if (mishitsAllowed > 0) {
+                mishitsAllowed--;
+            }
         },
         getPreviewTime = function () {
             return previewTime;
+        },
+        isGameOver = function () {
+            if (mishits > mishitsAllowed) {
+                return true;
+            }
+            return false;
+        },
+        getAccuracy = function () {
+            if (totalGuessed + totalMistakes == 0) {
+                return 0;
+            }
+            else {
+                var accuracy = 100 * totalGuessed / (totalGuessed + totalMistakes);
+                return Math.round(accuracy);
+            }
+        },
+        getMishitsAllowed = function () {
+            return mishitsAllowed;
         };
 
     return {
@@ -113,7 +152,6 @@ var game = function () {
         'getPieces': getPieces,
         'validateColors': validateColor,
         'areAllGuessed': areAllGuessed,
-        'incrementGuessed': incrementGuessed,
         'nextLevel': nextLevel,
         'resetCurrentLevel': resetCurrentLevel,
         'increaseDifficulty': increaseDifficulty,
@@ -123,6 +161,12 @@ var game = function () {
         'getPreviewTime': getPreviewTime,
         'increasePreviewTime': increasePreviewTime,
         'decreasePreviewTime': decreasePreviewTime,
-        'markGuessed': markGuessed
+        'markGuessed': markGuessed,
+        'getAccuracy': getAccuracy,
+        'markMistake': markMistake,
+        'isGameOver': isGameOver,
+        'increaseMishitsAllowed': increaseMishitsAllowed,
+        'decreaseMishitsAllowed': decreaseMishitsAllowed,
+        'getMishitsAllowed': getMishitsAllowed
     };
 }();

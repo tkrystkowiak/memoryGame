@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<script src = "js/game.js"></script>
-<script src = "js/controller.js"></script>
-<script src = "js/view.js"></script>
+<script src="js/game.js"></script>
+<script src="js/controller.js"></script>
+<script src="js/view.js"></script>
 <body>
 <link rel="stylesheet" type="text/css" href="style.css">
 <div class="menu" id="menu">
@@ -16,16 +16,49 @@
     <div class="info">
         <div id="level">Level: 0</div>
         <div id="left">Left to guess: 0</div>
+        <div id="accuracy">Accuracy: 0%</div>
     </div>
-    <div class="info">
+    <div class="time_info">
         <div id="time">Preview time: 1s</div>
         <div class="time">
-        <button class="time_button" id="time_plus">+</button>
-        <button class="time_button" id="time_minus">-</button>
+            <button class="time_button" id="time_plus">+</button>
+            <button class="time_button" id="time_minus">-</button>
+        </div>
+    </div>
+    <div class="mishit_info">
+        <div id="mishit">Mishits allowed: 0</div>
+        <div class="time">
+            <button class="time_button" id="mishit_plus">+</button>
+            <button class="time_button" id="mishit_minus">-</button>
         </div>
     </div>
 </div>
-
 <div class="square_container" id="square_container"></div>
 </body>
+<script>
+    window.onload = function () {
+        controller.startGame(),
+            document.getElementById("start").onclick = function () {
+                controller.highlightPieces()
+            },
+            document.getElementById("more").onclick = function () {
+                controller.increaseDifficulty()
+            },
+            document.getElementById("reset").onclick = function () {
+                controller.resetGame()
+            },
+            document.getElementById("time_plus").onclick = function () {
+                controller.increasePreviewTime()
+            },
+            document.getElementById("time_minus").onclick = function () {
+                controller.decreasePreviewTime()
+            },
+            document.getElementById("mishit_plus").onclick = function () {
+                controller.increaseMishitsAllowed()
+            },
+            document.getElementById("mishit_minus").onclick = function () {
+                controller.decreaseMishitsAllowed()
+            }
+    }
+</script>
 </html>
