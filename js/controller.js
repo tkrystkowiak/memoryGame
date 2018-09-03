@@ -14,7 +14,6 @@ var controller = function () {
             view.setMishitsAllowed(game.getMishitsAllowed());
             view.renderPieces(game.getNumberOfPieces());
         },
-
         highlightPieces = function () {
             view.setLevel(game.getUserLevel());
             view.setLeftToGuess(game.getLeftToGuess());
@@ -30,7 +29,7 @@ var controller = function () {
             view.resetColors(game.getPieces());
             game.increaseDifficulty();
             view.renderPieces(game.getPieces().length);
-            highlightPieces();
+            controller.highlightPieces();
 
         },
         addListeners = function () {

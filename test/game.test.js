@@ -4,6 +4,21 @@ describe('Game', function () {
         game.resetAll();
     });
 
+    it('should reset all variables in model', function () {
+        game.nextLevel();
+        game.initializePieces();
+        game.drawPieces();
+        game.markGuessed(1);
+        game.markMistake(2);
+        game.resetAll();
+        expect(game.getUserLevel()).toBe(0);
+        expect(game.getNumberOfPieces()).toBe(4);
+        expect(game.getAccuracy()).toBe(0);
+        expect(game.getLeftToGuess()).toBe(1);
+        expect(game.getPieces().length).toBe(4);
+        expect(game.getMishitsAllowed()).toBe(0);
+    });
+
     it('should draw and highlight one piece', function () {
         var pieces = game.drawPieces(),
             highligthed = 0;
@@ -135,7 +150,7 @@ describe('Game', function () {
         expect(game.getMishitsAllowed()).toBe(initial);
     });
 
-    it('should correctly validate number of highlighted pieces piece', function () {
+    it('should correctly validate number of highlighted pieces on first level', function () {
         var pieces = game.drawPieces(),
             highligthed = 0;
         for (var i = 0; i < pieces.length; i++) {
@@ -144,6 +159,18 @@ describe('Game', function () {
             }
         }
         expect(highligthed).toBe(1);
+    });
+
+    it('should correctly validate number of highlighted pieces on second level', function () {
+        game.nextLevel();
+        var pieces = game.drawPieces(),
+            highligthed = 0;
+        for (var i = 0; i < pieces.length; i++) {
+            if (game.validateColors(i)) {
+                highligthed++;
+            }
+        }
+        expect(highligthed).toBe(2);
     });
 
 });

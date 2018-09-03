@@ -1,3 +1,4 @@
+
 describe('Controller', function () {
 
     beforeEach(function () {
@@ -32,6 +33,18 @@ describe('Controller', function () {
         expect(view.renderPieces).toHaveBeenCalledWith(game.getNumberOfPieces());
     });
 
+    it('should call methods to increase difficulty', function () {
+        spyOn(view, 'resetColors');
+        spyOn(game, 'increaseDifficulty');
+        spyOn(view, 'renderPieces');
+        spyOn(controller,'highlightPieces');
+        controller.increaseDifficulty();
+        expect(view.resetColors).toHaveBeenCalledWith(game.getPieces());
+        expect(game.increaseDifficulty).toHaveBeenCalled();
+        expect(view.renderPieces).toHaveBeenCalled();
+        expect(controller.highlightPieces).toHaveBeenCalled();
+    });
+
     it('should call methods to increase preview time', function () {
         spyOn(game, 'increasePreviewTime');
         spyOn(view, 'setPreviewTime');
@@ -58,6 +71,26 @@ describe('Controller', function () {
         spyOn(view, 'setMishitsAllowed');
         controller.decreaseMishitsAllowed();
         expect(view.setMishitsAllowed).toHaveBeenCalledWith(game.getMishitsAllowed());
+    });
+
+    it('should call methods to highlight pieces', function () {
+        spyOn(view, 'setLevel');
+        spyOn(view, 'setLeftToGuess');
+        spyOn(game,'resetCurrentLevel');
+        var pieces = [];
+        spyOn(game,'drawPieces').and.returnValue(pieces);
+        spyOn(view, 'highlight');
+        spyOn(view, 'resetColors');
+        spyOn<controller>(controller, 'addListeners');
+        controller.highlightPieces();
+        expect(view.setLevel).toHaveBeenCalledWith(game.getUserLevel());
+        expect(view.setLeftToGuess).toHaveBeenCalledWith(game.getLeftToGuess());
+        expect(game.resetCurrentLevel).toHaveBeenCalled();
+        expect(game.drawPieces).toHaveBeenCalled();
+        expect(view.highlight).toHaveBeenCalledWith(pieces);
+        window.setTimeout(function () {
+            expect(view.resetColors).toHaveBeenCalledWith(pieces);
+        }, game.getPreviewTime() * 1000);
     });
 
 });
